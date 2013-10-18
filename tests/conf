@@ -1,7 +1,7 @@
 # $FreeBSD: head/tools/regression/pjdfstest/tests/conf 211354 2010-08-15 21:29:03Z pjd $
 # pjdfstest configuration file
 
-# Supported operating systems: FreeBSD, Darwin, SunOS, Linux
+# Supported operating systems: FreeBSD, OpenBSD, Darwin, SunOS, Linux
 os=`uname`
 
 unsupported_os()
@@ -13,7 +13,7 @@ unsupported_os()
 get_mountpoint()
 {
 	case "${os}" in
-	FreeBSD|Darwin)
+	FreeBSD|OpenBSD|Darwin)
 		df . | tail -1 | awk '{print $6}'
 		;;
 	*)
@@ -28,6 +28,12 @@ FreeBSD|Darwin)
 	#fs=`df -T . | tail -1 | awk '{print $2}'`
 	mountpoint="`get_mountpoint`"
 	fs=`mount -p | awk '$2 == "'$mountpoint'" { print toupper($3) }'`
+	;;
+OpenBSD)
+	GREP=grep
+	#fs=`df -T . | tail -1 | awk '{print $2}'`
+	mountpoint="`get_mountpoint`"
+	fs=`mount | awk '$2 == "'$mountpoint'" { print toupper($3) }'`
 	;;
 Solaris|SunOS)
 	GREP=ggrep
