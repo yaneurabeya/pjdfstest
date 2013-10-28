@@ -13,6 +13,8 @@ ${PROG}:	${PROG}.c
 	OS_CFLAGS=-D__OS_$${OSTYPE}__; \
 	if [ $$OSTYPE = "FreeBSD" ]; then \
 		OS_CFLAGS="$$OS_CFLAGS -DHAS_LCHMOD -DHAS_CHFLAGS -DHAS_FCHFLAGS -DHAS_LCHFLAGS ${HAS_FREEBSD_ACL}"; \
+        elif [ $$OSTYPE = "OpenBSD" ]; then \
+                OS_CFLAGS="$$OS_CFLAGS -DHAS_CHFLAGS -DHAS_FCHFLAGS"; \
 	elif [ $$OSTYPE = "SunOS" ]; then \
 		OS_CFLAGS="$$OS_CFLAGS -DHAS_TRUNCATE64 -DHAS_STAT64"; \
 		OS_LDLIBS="$$OS_LDLIBS -lsocket"; \
@@ -31,4 +33,5 @@ ${PROG}:	${PROG}.c
 all: ${PROG}
 
 clean:
-	rm -f ${PROG}
+	@echo "Cleanup..."
+	@rm -rf ${PROG} pjdfstest_*
