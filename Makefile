@@ -33,5 +33,5 @@ ${PROG}:	${PROG}.c
 all: ${PROG}
 
 clean:
-        @echo "Cleanup..."
-        @rm -rf ${PROG} pjdfstest_*
+	@echo "Cleanup..."
+	@rm -rf ${PROG} pjdfstest_*
